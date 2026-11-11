@@ -29,13 +29,21 @@ ROOT = Path(__file__).resolve().parent.parent
 ET = ZoneInfo("America/New_York")
 
 
+# GitHub backup schedules (UTC) → whether that line is meant for daylight-saving time.
+BACKUP_CRONS = {"45 14 * * 2,4": False, "45 13 * * 2,4": True}
+
+
 def should_run_now(schedule: str) -> bool:
-    """GitHub cron is UTC. Two schedules exist (EST and EDT); only the one matching today's offset runs."""
+    """GitHub cron is UTC. Two backup lines exist (EST and EDT); only the one matching today's offset runs."""
     if not schedule:
-        return True  # manual run
+        return True  # manual or Cloudflare-started run
     in_dst = bool(dt.datetime.now(ET).dst())
-    edt_cron = schedule.startswith("45 12")
-    return in_dst == edt_cron
+    return BACKUP_CRONS.get(schedule, in_dst) == in_dst
+
+
+def already_sent_today(today: dt.date) -> bool:
+    f = ROOT / "data" / "last_run.txt"
+    return f.exists() and f.read_text().startswith(today.isoformat())
 
 
 def sort_key(j: dict):
@@ -108,6 +116,11 @@ def main() -> int:
     cfg = yaml.safe_load((ROOT / "config.yaml").read_text())
     now = dt.datetime.now(ET)
     today = now.date()
+    source = os.environ.get("RUN_SOURCE", "manual")
+    print(f"Started by: {source}")
+    if source in ("cloudflare", "github-schedule") and already_sent_today(today) and not args.dry_run:
+        print("Today's sweep was already sent; skipping so nobody gets a second email.")
+        return 0
     archive = site.load()
     log = SentLog(ROOT / "data" / "sent_jobs.json", site.known_jobs(archive))
     notes = []
