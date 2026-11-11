@@ -58,7 +58,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Save the sent-jobs log
-        if: success() && inputs.dry_run != true
+        if: always() && inputs.dry_run != true
         run: |
           git config user.name "job-sweep-bot"
           git config user.email "job-sweep-bot@users.noreply.github.com"
