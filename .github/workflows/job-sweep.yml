@@ -1,17 +1,22 @@
 name: Job Sweep
 
 on:
+  # The main trigger is Cloudflare (worker.js), which starts this at 8:45am Eastern on Tue/Thu.
+  # These GitHub schedules are a BACKUP at 9:45am Eastern: if the 8:45 run already happened that day,
+  # the backup sees it and stops without sending a second email.
   schedule:
-    # 8:45am Eastern on Tuesdays and Thursdays. GitHub runs on UTC, so there is one line for
-    # standard time and one for daylight time; the script skips whichever doesn't apply.
-    - cron: "45 13 * * 2,4"   # EST (Nov–Mar)
-    - cron: "45 12 * * 2,4"   # EDT (Mar–Nov)
+    - cron: "45 14 * * 2,4"   # 9:45am EST (Nov–Mar)
+    - cron: "45 13 * * 2,4"   # 9:45am EDT (Mar–Nov)
   workflow_dispatch:
     inputs:
       dry_run:
         description: "Preview only (build the email, don't send)"
         type: boolean
         default: false
+      source:
+        description: "Who started this run (leave as manual)"
+        type: string
+        default: "manual"
 
 permissions:
   contents: write
@@ -36,6 +41,7 @@ jobs:
       - name: Run sweep
         env:
           CRON_SCHEDULE: ${{ github.event.schedule }}
+          RUN_SOURCE: ${{ github.event_name == 'schedule' && 'github-schedule' || inputs.source || 'manual' }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
