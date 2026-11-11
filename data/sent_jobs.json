@@ -1,12 +1,101 @@
 [
-  {"title": "Public Affairs Specialist (Social Media), GS-14", "employer": "Drug Enforcement Administration (DOJ)", "url": "https://www.usajobs.gov/job/891648900", "location": "Arlington, VA", "salary": "$143,913 - $187,093 per year", "closes": "11/16/2026", "first_emailed": "2026-11-10"},
-  {"title": "Public Affairs Specialist, GS-14", "employer": "Federal Trade Commission", "url": "https://www.usajobs.gov/job/891178200", "location": "Washington, DC", "salary": "$143,913 - $187,093 per year", "closes": "11/17/2026", "first_emailed": "2026-11-10"},
-  {"title": "Development Specialist", "employer": "National Gallery of Art", "url": "https://www.usajobs.gov/job/891889200", "location": "Washington, DC", "salary": "$85,447 - $111,087 per year", "closes": "11/20/2026", "first_emailed": "2026-11-10"},
-  {"title": "Director of Strategic Communications (Kogod School of Business)", "employer": "American University", "url": "https://american.wd1.myworkdayjobs.com/en-US/AU/job/Main-Campus-Washington-DC/Director-of-Strategic-Communications_R5100", "location": "Washington, DC", "salary": "$103,000 - $115,000", "closes": "", "first_emailed": "2026-11-11"},
-  {"title": "Director, Communications", "employer": "National Ready Mixed Concrete Association (NRMCA)", "url": "https://nrmca.isolvedhire.com/jobs/1887671", "location": "Alexandria, VA", "salary": "$120,000 - $150,000 + incentive", "closes": "", "first_emailed": "2026-11-11"},
-  {"title": "Deputy Director of Communications", "employer": "Equimundo", "url": "https://www.equimundo.org/wp-content/uploads/2026/10/Deputy-Director-of-Comms-Job-Description-October-2026-1.pdf", "location": "Washington, DC area (hybrid)", "salary": "$110,000 - $130,000", "closes": "", "first_emailed": "2026-11-11"},
-  {"title": "Senior Director, Communications", "employer": "National College Attainment Network (NCAN)", "url": "https://ncan.bamboohr.com/careers/25", "location": "Washington, DC", "salary": "$164,785 (fixed)", "closes": "", "first_emailed": "2026-11-11"},
-  {"title": "Senior Director, Communications & Marketing", "employer": "American Association for the Study of Liver Diseases (AASLD)", "url": "https://www.aasld.org/aasld-careers", "location": "Remote (DC area preferred)", "salary": "$138,000 - $185,000", "closes": "", "first_emailed": "2026-11-11"},
-  {"title": "Deputy Director of Communications", "employer": "FairVote", "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=09b61499-41ab-4413-a2f7-4f7474096cf9&ccId=19000101_000001&jobId=667446&lang=en_US", "location": "Silver Spring, MD", "salary": "$95,000 - $120,000", "closes": "", "first_emailed": "2026-11-11"},
-  {"title": "Sr. Manager, CES Communications", "employer": "Consumer Technology Association (CTA)", "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=f6281961-94a1-468a-8b53-78b84cc3a14c&ccId=19000101_000001&source=CC2&lang=en_US&selectedMenuKey=CareerCenter&jobId=598702", "location": "Arlington, VA", "salary": "$100,000 - $125,000", "closes": "", "first_emailed": "2026-11-11"}
+  {
+    "title": "Public Affairs Specialist (Social Media), GS-14",
+    "employer": "Drug Enforcement Administration (DOJ)",
+    "url": "https://www.usajobs.gov/job/891648900",
+    "location": "Arlington, VA",
+    "salary": "$143,913 - $187,093 per year",
+    "closes": "11/16/2026",
+    "first_emailed": "2026-11-10"
+  },
+  {
+    "title": "Public Affairs Specialist, GS-14",
+    "employer": "Federal Trade Commission",
+    "url": "https://www.usajobs.gov/job/891178200",
+    "location": "Washington, DC",
+    "salary": "$143,913 - $187,093 per year",
+    "closes": "11/17/2026",
+    "first_emailed": "2026-11-10"
+  },
+  {
+    "title": "Development Specialist",
+    "employer": "National Gallery of Art",
+    "url": "https://www.usajobs.gov/job/891889200",
+    "location": "Washington, DC",
+    "salary": "$85,447 - $111,087 per year",
+    "closes": "11/20/2026",
+    "first_emailed": "2026-11-10"
+  },
+  {
+    "title": "Director of Strategic Communications (Kogod School of Business)",
+    "employer": "American University",
+    "url": "https://american.wd1.myworkdayjobs.com/en-US/AU/job/Main-Campus-Washington-DC/Director-of-Strategic-Communications_R5100",
+    "location": "Washington, DC",
+    "salary": "$103,000 - $115,000",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Director, Communications",
+    "employer": "National Ready Mixed Concrete Association (NRMCA)",
+    "url": "https://nrmca.isolvedhire.com/jobs/1887671",
+    "location": "Alexandria, VA",
+    "salary": "$120,000 - $150,000 + incentive",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Deputy Director of Communications",
+    "employer": "Equimundo",
+    "url": "https://www.equimundo.org/wp-content/uploads/2026/10/Deputy-Director-of-Comms-Job-Description-October-2026-1.pdf",
+    "location": "Washington, DC area (hybrid)",
+    "salary": "$110,000 - $130,000",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Senior Director, Communications",
+    "employer": "National College Attainment Network (NCAN)",
+    "url": "https://ncan.bamboohr.com/careers/25",
+    "location": "Washington, DC",
+    "salary": "$164,785 (fixed)",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Senior Director, Communications & Marketing",
+    "employer": "American Association for the Study of Liver Diseases (AASLD)",
+    "url": "https://www.aasld.org/aasld-careers",
+    "location": "Remote (DC area preferred)",
+    "salary": "$138,000 - $185,000",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Deputy Director of Communications",
+    "employer": "FairVote",
+    "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=09b61499-41ab-4413-a2f7-4f7474096cf9&ccId=19000101_000001&jobId=667446&lang=en_US",
+    "location": "Silver Spring, MD",
+    "salary": "$95,000 - $120,000",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Sr. Manager, CES Communications",
+    "employer": "Consumer Technology Association (CTA)",
+    "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=f6281961-94a1-468a-8b53-78b84cc3a14c&ccId=19000101_000001&source=CC2&lang=en_US&selectedMenuKey=CareerCenter&jobId=598702",
+    "location": "Arlington, VA",
+    "salary": "$100,000 - $125,000",
+    "closes": "",
+    "first_emailed": "2026-11-11"
+  },
+  {
+    "title": "Trademark Social Media Specialist, GS-13",
+    "employer": "Patent and Trademark Office",
+    "url": "https://www.usajobs.gov:443/job/891843100",
+    "location": "Alexandria, VA",
+    "salary": "$121,785 – $158,322 per year",
+    "closes": "11/19/2026",
+    "first_emailed": "2026-11-11"
+  }
 ]
