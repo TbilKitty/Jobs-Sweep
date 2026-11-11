@@ -28,11 +28,12 @@ def _parse_date(s: str):
 
 # ── sent-jobs log ──────────────────────────────────────────────
 class SentLog:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, also_known: list[dict] | None = None):
         self.path = path
         self.rows = json.loads(path.read_text()) if path.exists() else []
-        self.urls = {r["url"].rstrip("/").lower() for r in self.rows if r.get("url")}
-        self.keys = {(_norm(r["title"]), _norm(r["employer"])) for r in self.rows}
+        known = self.rows + (also_known or [])
+        self.urls = {r["url"].rstrip("/").lower() for r in known if r.get("url")}
+        self.keys = {(_norm(r["title"]), _norm(r["employer"])) for r in known}
 
     def is_repeat(self, j: dict) -> bool:
         if j["url"].rstrip("/").lower() in self.urls:
