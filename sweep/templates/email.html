@@ -7,6 +7,7 @@
   <tr><td style="padding:28px 28px 8px;">
     <div style="font-size:22px;font-weight:bold;">Job Sweep — {{ date_long }}</div>
     <div style="font-size:14px;color:#616e7c;margin-top:4px;">{{ total }} new role{{ '' if total == 1 else 's' }} for {{ name }} · DC / Baltimore / Northern Virginia · ${{ min_k }}K+</div>
+    {% if tracker_link %}<div style="margin-top:16px;"><a href="{{ tracker_link }}" style="display:inline-block;background:#75183c;color:#fff1bb;font-weight:bold;font-size:14px;text-decoration:none;padding:10px 16px;border-radius:999px;">Open the job tracker · mark what you've applied to</a></div>{% endif %}
     {% if review_mode %}<div style="font-size:12px;color:#b44d12;margin-top:8px;">Review copy — not sent to {{ name }}.</div>{% endif %}
   </td></tr>
   {% if total == 0 %}
