@@ -96,15 +96,20 @@ def _extract_json(text: str):
 
 # ── OpenAI (Responses API) ─────────────────────────────────────
 def _openai(prompt: str, model: str, web: bool) -> str:
+       key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not key:
+        raise RuntimeError("OPENAI_API_KEY is empty — check the secret's exact name in GitHub")
+    print(f"Using OpenAI key ending in ...{key[-4:]}")
     body = {"model": model, "input": prompt}
     if web:
         body["tools"] = [{"type": "web_search"}]
     r = requests.post(
         "https://api.openai.com/v1/responses",
-        headers={"Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}", "Content-Type": "application/json"},
+        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
         json=body, timeout=900,
     )
-    r.raise_for_status()
+    if r.status_code >= 400:
+        raise RuntimeError(f"OpenAI {r.status_code}: {r.text[:400]}")
     data = r.json()
     out = []
     for item in data.get("output", []):
