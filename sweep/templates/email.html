@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<body style="margin:0;padding:0;background:#f4f5f7;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:8px;font-family:Arial,Helvetica,sans-serif;color:#1f2933;">
+  <tr><td style="padding:28px 28px 8px;">
+    <div style="font-size:22px;font-weight:bold;">Job Sweep — {{ date_long }}</div>
+    <div style="font-size:14px;color:#616e7c;margin-top:4px;">{{ total }} new role{{ '' if total == 1 else 's' }} for {{ name }} · DC / Baltimore / Northern Virginia · ${{ min_k }}K+</div>
+    {% if review_mode %}<div style="font-size:12px;color:#b44d12;margin-top:8px;">Review copy — not sent to {{ name }}.</div>{% endif %}
+  </td></tr>
+  {% if total == 0 %}
+  <tr><td style="padding:16px 28px 28px;font-size:15px;">No new qualifying postings this run.</td></tr>
+  {% endif %}
+  {% for section, jobs in sections %}
+  <tr><td style="padding:20px 28px 4px;">
+    <div style="font-size:13px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;color:#3e4c59;border-bottom:2px solid #e4e7eb;padding-bottom:6px;">{{ section }}</div>
+  </td></tr>
+  {% for j in jobs %}
+  <tr><td style="padding:12px 28px 4px;">
+    <a href="{{ j.url }}" style="font-size:16px;font-weight:bold;color:#1a56db;text-decoration:none;">{{ j.title }}</a>
+    <div style="font-size:14px;color:#1f2933;margin-top:2px;">{{ j.employer }}</div>
+    <div style="font-size:13px;color:#616e7c;margin-top:4px;">{{ j.location }} · {{ j.salary }} · {% if j.closes %}Closes {{ j.closes }}{% else %}Open until filled (posted {{ j.posted }}){% endif %}</div>
+    {% if j.fit %}<div style="font-size:13px;margin-top:4px;color:{{ '#b44d12' if j.stretch else '#0e7c3a' }};"><b>{{ 'Stretch' if j.stretch else 'Fit' }}:</b> {{ j.fit }}</div>{% endif %}
+  </td></tr>
+  {% endfor %}
+  {% endfor %}
+  <tr><td style="padding:24px 28px 28px;font-size:12px;color:#9aa5b1;">
+    {% if empty_sections %}No new qualifying jobs this run: {{ empty_sections | join(', ') }}.<br>{% endif %}
+    Every link goes to the employer's own posting and was checked when this email was sent. Jobs are only sent once.
+  </td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>

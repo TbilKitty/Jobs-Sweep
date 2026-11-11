@@ -1,0 +1,89 @@
+# ─────────────────────────────────────────────────────────────
+#  Job Sweep settings — edit this file on GitHub to change anything.
+# ─────────────────────────────────────────────────────────────
+
+# REVIEW MODE: true = emails go ONLY to the reviewer below.
+# Set to false when you're ready for David to receive them.
+review_mode: true
+
+email:
+  from_name: "Job Sweep"
+  to: ["davidleerodgers@gmail.com"]   # used when review_mode is false
+  cc: ["readuvall@gmail.com"]         # used when review_mode is false
+  reviewer: "readuvall@gmail.com"     # the only recipient while review_mode is true
+
+# Which AI does the state/local/nonprofit search: "openai" or "anthropic".
+# Put the matching key in the repo's secrets (OPENAI_API_KEY or ANTHROPIC_API_KEY).
+ai_provider: "openai"
+openai_model: "gpt-5"
+anthropic_model: "claude-sonnet-4-5"
+
+min_salary: 95000          # top of posted range must be at least this
+max_posting_age_days: 21   # for "open until filled" postings
+
+candidate:
+  name: "David Rodgers"
+  profile: |
+    ~16 years in marketing and communications (resume says 10+).
+    Marketing Director, Nielsen Automotive Group, Alexandria VA, 2025–2026: $800K budget (TV + Google Ads, 8x ROAS),
+    CRM migration with lifecycle automation, supervised marketing/comms staff.
+    Freelance Marketing & Communications Consultant, 2023–present: NRECA member communications, registration for
+    12 courses + 6 major events, database segmentation, web/data workflows.
+    Marketing Director, Conte's Bike Shop, 2020–2024: 21 locations + 2 e-commerce sites, events (DC Bike Ride etc.),
+    community building, email/social, launched an online marketplace.
+    Recreational Boating & Fishing Foundation, 2012–2020: Marketing Coordinator → Communications Manager; press releases,
+    newsletters, TakeMeFishing.org web content, board/executive updates, 50-state annual conference, direct mail ($34.6M).
+    President of DT Racing cycling team (7 corporate sponsors). SHIFT Emerging Leader (outdoor industry).
+    Skills: strategic comms, media/PR, digital + social, email/CRM (HubSpot, Salesforce, Pardot, Mailchimp),
+    Google Analytics/Ads, event marketing, demand gen, community outreach, partnerships/sponsorships, brand, web content,
+    budgets, staff supervision. BS Business Administration.
+    No law, engineering, clinical, teaching or CPA credentials; no legislative/lobbying track record.
+  fit_rule: |
+    Matches or barely exceeds the resume: Manager, Senior Manager, Director, Deputy Director, Head-of roles in marketing,
+    communications, public affairs/PIO, media relations, digital/social/web content, outreach & public engagement,
+    community/external/stakeholder relations, partnerships & sponsorships, events, brand, member/customer engagement.
+    Senior Director only if within reach (mark as stretch). Federal GS-13/14 (GS-15 only if squarely comms/outreach).
+    Exclude VP/C-suite/SES, chief of staff, lobbying/legislative/government-affairs, major-gift fundraising,
+    roles needing credentials he lacks. Prefer outdoor recreation, cycling, boating/fishing, conservation, parks,
+    tourism, sports, events, member associations, transportation.
+
+# Federal search (official USAJOBS API)
+usajobs:
+  keywords: ["public affairs", "communications", "outreach", "marketing", "partnership", "engagement", "media relations"]
+  series: ["1035", "1001", "0301", "1101", "0343"]
+  locations:
+    - "Washington, District of Columbia"
+    - "Maryland"
+    - "Arlington, Virginia"
+    - "Alexandria, Virginia"
+    - "Fairfax, Virginia"
+    - "Reston, Virginia"
+    - "Springfield, Virginia"
+    - "Quantico, Virginia"
+    - "Falls Church, Virginia"
+  min_grade: 13
+  max_grade: 15
+  days_posted: 14
+
+# Never link to these — the script finds the employer's own posting or drops the job.
+aggregator_domains:
+  - indeed.com
+  - linkedin.com
+  - glassdoor.com
+  - ziprecruiter.com
+  - career.com
+  - mediabistro.com
+  - tallo.com
+  - qureos.com
+  - findroles.com
+  - talents.vaia.com
+  - jobera.com
+  - theladders.com
+  - monster.com
+  - simplyhired.com
+  - freshgovjobs.com
+  - jobs.recruiter.com
+  - careerbuilder.com
+  - tealhq.com
+  - hiringcafe.com
+  - builtin.com
