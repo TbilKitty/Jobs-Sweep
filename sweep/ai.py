@@ -96,7 +96,7 @@ def _extract_json(text: str):
 
 # ── OpenAI (Responses API) ─────────────────────────────────────
 def _openai(prompt: str, model: str, web: bool) -> str:
-       key = os.environ.get("OPENAI_API_KEY", "").strip()
+    key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not key:
         raise RuntimeError("OPENAI_API_KEY is empty — check the secret's exact name in GitHub")
     print(f"Using OpenAI key ending in ...{key[-4:]}")
