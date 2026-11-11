@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Job Sweep Archive</title>
+<style>
+:root{color-scheme:light;--ink:#421328;--muted:#63404a;--maroon:#75183c;--gold:#ffd360;--paper:#fff8e3;--line:#e8cfab}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif}
+main{max-width:1100px;margin:auto;padding:clamp(16px,5vw,55px)}
+header{padding:clamp(24px,6vw,60px);border-radius:24px;background:linear-gradient(120deg,#54132e,#791c40);color:#fff1bb;border:1px solid var(--line)}
+h1{font:clamp(38px,7vw,68px)/1.04 Georgia,serif;margin:0 0 13px;letter-spacing:-.04em}
+header p{max-width:64ch;margin:0;color:#fff2d6}
+header .spark{color:var(--gold);font-size:28px;margin-bottom:10px}
+header .latest{margin-top:16px}
+header .latest a{display:inline-block;background:var(--gold);color:#54132e;font-weight:700;text-decoration:none;padding:8px 14px;border-radius:999px}
+.tools{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:end;margin:24px 0 6px}
+.search{flex:1 1 260px;font-weight:650}
+input[type=search]{width:100%;font:inherit;border:1px solid #9f6275;border-radius:9px;padding:9px 12px;background:#fff;color:var(--ink)}
+.toggle{padding:9px 0}
+#count{margin:7px 0;color:var(--muted)}
+h2{font:24px/1.2 Georgia,serif;margin:27px 0 12px;scroll-margin-top:16px}
+h2 .new-run{font:700 12px/1 "DM Sans",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;background:var(--maroon);color:#fff1bb;padding:4px 8px;border-radius:999px;vertical-align:middle;margin-left:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:12px}
+article{background:#fff;border:1px solid var(--line);border-left:4px solid #db9d24;border-radius:12px;padding:16px}
+article h3{font-size:17px;line-height:1.3;margin:0 0 6px}
+a{color:var(--maroon);text-underline-offset:3px}
+article p{margin:5px 0;color:var(--muted);font-size:14px}
+.employer{font-weight:650}.employer span{font-weight:400}
+article .salary{color:#75183c;font-weight:700}
+article .fit{color:#2f5d34}
+article .fit.stretch{color:#8a4b0c}
+article .past{display:inline-block;background:#ffeb9f;color:#6e440c;padding:2px 8px;border-radius:20px}
+[hidden], article .past[hidden]{display:none}
+:focus-visible{outline:3px solid #75183c;outline-offset:3px}
+.cursor-spark{
+  position:fixed;z-index:10;pointer-events:none;
+  color:var(--gold);text-shadow:0 0 2px #75183c,0 0 8px #f3a916;
+  font-size:18px;line-height:1;
+  animation:cursor-twinkle 540ms ease-out both;
+}
+.cursor-spark:nth-child(even){color:var(--maroon);font-size:12px;text-shadow:0 0 5px var(--gold)}
+@keyframes cursor-twinkle{
+  from{opacity:1;transform:translate(-50%,-50%) scale(.7)}
+  30%{opacity:1;transform:translate(-50%,-75%) scale(1.15) rotate(15deg)}
+  to{opacity:0;transform:translate(-50%,-140%) scale(.2) rotate(40deg)}
+}
+@media (prefers-reduced-motion:reduce){.cursor-spark{display:none}}
+#progress{font-weight:700;color:var(--maroon);margin:8px 0}
+#sync-note{color:var(--muted);font-size:13px;margin:0}
+.card-actions{display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px;margin-top:10px}
+.card-actions button{font:inherit;font-size:13px;font-weight:650;cursor:pointer;padding:5px 9px;border:1px solid #ab7785;border-radius:8px;background:#fff7da;color:var(--maroon)}
+article.applied h3 a{text-decoration:line-through}
+article.applied{border-left-color:var(--maroon);background:#fffbf0}
+article .applied-date{color:var(--maroon);font-weight:700}
+</style>
+</head>
+<body><main>
+<header><p class="spark" aria-hidden="true">✦</p><h1>Job Sweep Archive</h1>
+<p>Pick up wherever you left off. Every job sweep is saved here, newest sweep first, with the earlier curated search below.</p>
+<p>Pay and deadlines reflect the original listings. Check the posting for current availability.</p>
+{% if latest %}<p class="latest"><a href="#{{ latest.id }}">Jump to the newest sweep · {{ latest.short }}</a></p>{% endif %}
+<p class="latest" style="margin-top:8px;font-size:13px">Last updated {{ updated }}</p></header>
+<div class="tools" hidden id="tools">
+<label class="search">Search listings <input type="search" id="query" placeholder="Title, employer, location, or keyword"></label>
+<label class="toggle"><input type="checkbox" id="hide-past"> Hide passed deadlines</label>
+<label class="toggle"><input type="checkbox" id="hide-applied"> Hide applied</label>
+</div>
+<p id="progress" role="status"></p>
+<p id="sync-note" role="status"></p>
+<p id="save-note" role="status" hidden>Saving is unavailable in this browser. Changes will last until you reload this page.</p>
+<p id="count" role="status"></p>
+{% for g in groups %}<section class="group"><h2 id="{{ g.id }}">{{ g.title }}{% if g.id == latest_id %}<span class="new-run">New</span>{% endif %}</h2><div class="grid">{% for j in g.jobs %}<article data-deadline="{{ j.deadline }}">
+<h3><a href="{{ j.url }}">{{ j.title }}</a></h3>
+<p class="employer">{{ j.employer }} <span>· {{ j.location }}</span></p>
+<p class="salary">{{ j.salary }}</p>
+<p class="status"><strong>Recorded status</strong> · {{ j.status }}</p>
+{% if j.fit %}<p class="fit{% if j.stretch %} stretch{% endif %}"><strong>{{ 'Stretch' if j.stretch else 'Fit' }}:</strong> {{ j.fit }}</p>{% endif %}
+{% if j.note %}<p>{{ j.note }}</p>{% endif %}
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+{% endfor %}</div></section>
+{% endfor %}</main>
+<script>
+const query = document.querySelector('#query');
+const hidePast = document.querySelector('#hide-past');
+const hideApplied = document.querySelector('#hide-applied');
+const syncNote = document.querySelector('#sync-note');
+const groups = [...document.querySelectorAll('.group')].map(section => ({
+  section, cards: [...section.querySelectorAll('article')]
+}));
+const allCards = groups.flatMap(group => group.cards);
+const storageKey = 'job-sweep-applied-v1';
+const saveNote = document.querySelector('#save-note');
+let applied = {};
+try {
+  const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) applied = saved;
+} catch {
+  saveNote.hidden = false;
+}
+function saveLocal() {
+  try { localStorage.setItem(storageKey, JSON.stringify(applied)); }
+  catch { saveNote.hidden = false; }
+}
+
+// Shared saving: marks sync across phones and computers when the site's /api/applied is set up.
+let shared = false;
+async function pushMark(url, at) {
+  if (!shared) return;
+  try {
+    const r = await fetch('/api/applied', {method: 'POST', headers: {'content-type': 'application/json'},
+                                           body: JSON.stringify({url, at})});
+    if (!r.ok) throw new Error(r.status);
+    syncNote.textContent = 'Saved · synced across devices';
+  } catch {
+    syncNote.textContent = 'Saved on this device. Sync failed — it will retry next time you mark a job.';
+  }
+}
+
+const appliedDate = new Intl.DateTimeFormat(undefined, {dateStyle: 'medium'});
+function updateProgress() {
+  const total = allCards.filter(card => Object.hasOwn(applied, card.querySelector('h3 a').getAttribute('href'))).length;
+  document.querySelector('#progress').textContent =
+    total + (total === 1 ? ' application marked' : ' applications marked');
+}
+const refreshers = [];
+for (const card of allCards) {
+  const heading = card.querySelector('h3');
+  const url = heading.querySelector('a').getAttribute('href');
+  const details = document.createElement('div');
+  while (heading.nextSibling) details.append(heading.nextSibling);
+  const date = document.createElement('p');
+  date.className = 'applied-date';
+  const actions = document.createElement('div');
+  actions.className = 'card-actions';
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  const mark = document.createElement('button');
+  mark.type = 'button';
+  actions.append(mark, toggle);
+  card.append(date, details, actions);
+
+  function showDetails(show) {
+    details.hidden = !show;
+    toggle.textContent = show ? 'Hide details' : 'Show details';
+    toggle.setAttribute('aria-expanded', String(show));
+  }
+  function refreshCard() {
+    const done = Object.hasOwn(applied, url);
+    card.classList.toggle('applied', done);
+    date.hidden = !done;
+    date.textContent = done ? 'Applied on ' + appliedDate.format(new Date(applied[url])) : '';
+    mark.textContent = done ? 'Undo applied' : 'Mark as applied';
+    toggle.hidden = !done;
+    showDetails(!done);
+  }
+  refreshers.push(refreshCard);
+  toggle.addEventListener('click', () => showDetails(details.hidden));
+  mark.addEventListener('click', () => {
+    let at = null;
+    if (Object.hasOwn(applied, url)) delete applied[url];
+    else { at = new Date().toISOString(); applied[url] = at; }
+    saveLocal();
+    pushMark(url, at);
+    refreshCard();
+    updateProgress();
+    filter();
+  });
+  refreshCard();
+}
+updateProgress();
+
+const parts = new Intl.DateTimeFormat('en', {
+  timeZone:'America/New_York', year:'numeric', month:'2-digit', day:'2-digit'
+}).formatToParts();
+const today = ['year','month','day'].map(type => parts.find(part => part.type === type).value).join('-');
+function filter() {
+  const terms = query.value.toLowerCase().trim().split(/\s+/);
+  let count = 0;
+  for (const {section,cards} of groups) {
+    for (const card of cards) {
+      const deadline = card.dataset.deadline;
+      const past = Boolean(deadline && deadline < today);
+      const isApplied = card.classList.contains('applied');
+      card.querySelector('.past').hidden = !past;
+      card.hidden = (hidePast.checked && past) || (hideApplied.checked && isApplied) ||
+        !terms.every(term => card.textContent.toLowerCase().includes(term));
+      if (!card.hidden) count++;
+    }
+    section.hidden = cards.every(card => card.hidden);
+  }
+  document.querySelector('#count').textContent = count === 0
+    ? 'No listings match these filters.'
+    : count + (count === 1 ? ' listing' : ' listings');
+}
+document.querySelector('#tools').hidden = false;
+query.addEventListener('input', filter);
+hidePast.addEventListener('change', filter);
+hideApplied.addEventListener('change', filter);
+filter();
+
+// Load shared marks, merge with this device's, and upload any this device has that the server doesn't.
+(async () => {
+  try {
+    const r = await fetch('/api/applied', {cache: 'no-store'});
+    if (!r.ok) throw new Error(r.status);
+    const server = await r.json();
+    shared = true;
+    const localOnly = Object.keys(applied).filter(u => !Object.hasOwn(server, u));
+    applied = {...applied, ...server};
+    for (const [u, at] of Object.entries(server)) if (at === null) delete applied[u];
+    saveLocal();
+    refreshers.forEach(fn => fn());
+    updateProgress();
+    filter();
+    for (const u of localOnly) await pushMark(u, applied[u]);
+    syncNote.textContent = 'Applied marks sync across your devices.';
+  } catch {
+    syncNote.textContent = 'Applied marks are saved in this browser.';
+  }
+})();
+
+const allowSparkles = window.matchMedia('(prefers-reduced-motion: no-preference)');
+let lastSpark = -Infinity;
+window.addEventListener('pointermove', event => {
+  if (!allowSparkles.matches || event.pointerType !== 'mouse' ||
+      event.timeStamp - lastSpark < 45) return;
+
+  lastSpark = event.timeStamp;
+  const spark = document.createElement('span');
+  spark.className = 'cursor-spark';
+  spark.textContent = '✦';
+  spark.setAttribute('aria-hidden', 'true');
+  spark.style.left = (event.clientX + 8) + 'px';
+  spark.style.top = (event.clientY + 8) + 'px';
+  document.body.append(spark);
+  window.setTimeout(() => spark.remove(), 550);
+}, {passive: true});
+</script></body></html>
