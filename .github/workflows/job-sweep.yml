@@ -1,0 +1,67 @@
+name: Job Sweep
+
+on:
+  schedule:
+    # 8:45am Eastern on Tuesdays and Thursdays. GitHub runs on UTC, so there is one line for
+    # standard time and one for daylight time; the script skips whichever doesn't apply.
+    - cron: "45 13 * * 2,4"   # EST (Nov–Mar)
+    - cron: "45 12 * * 2,4"   # EDT (Mar–Nov)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only (build the email, don't send)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: job-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run sweep
+        env:
+          CRON_SCHEDULE: ${{ github.event.schedule }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+          USAJOBS_EMAIL: ${{ secrets.USAJOBS_EMAIL }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python -m sweep.main --dry-run
+          else
+            python -m sweep.main
+          fi
+
+      - name: Save the email preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: email-preview
+          path: out/
+          if-no-files-found: ignore
+
+      - name: Save the sent-jobs log
+        if: success() && inputs.dry_run != true
+        run: |
+          git config user.name "job-sweep-bot"
+          git config user.email "job-sweep-bot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Log jobs sent $(date -u +%F)"
+          git push
