@@ -11,6 +11,6 @@
     { "binding": "APPLIED", "id": "b5b3bcbd7209459a998baa6e6ab8f948" }
   ],
   "triggers": {
-    "crons": ["45 12 * * 2,4", "45 13 * * 2,4"]
+    "crons": ["45 12 * * TUE,THU", "45 13 * * TUE,THU"]
   }
 }
