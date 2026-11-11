@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Job Sweep Archive</title>
+<style>
+:root{color-scheme:light;--ink:#421328;--muted:#63404a;--maroon:#75183c;--gold:#ffd360;--paper:#fff8e3;--line:#e8cfab}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif}
+main{max-width:1100px;margin:auto;padding:clamp(16px,5vw,55px)}
+header{padding:clamp(24px,6vw,60px);border-radius:24px;background:linear-gradient(120deg,#54132e,#791c40);color:#fff1bb;border:1px solid var(--line)}
+h1{font:clamp(38px,7vw,68px)/1.04 Georgia,serif;margin:0 0 13px;letter-spacing:-.04em}
+header p{max-width:64ch;margin:0;color:#fff2d6}
+header .spark{color:var(--gold);font-size:28px;margin-bottom:10px}
+.tools{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:end;margin:24px 0 6px}
+.search{flex:1 1 260px;font-weight:650}
+input[type=search]{width:100%;font:inherit;border:1px solid #9f6275;border-radius:9px;padding:9px 12px;background:#fff;color:var(--ink)}
+.toggle{padding:9px 0}
+#count{margin:7px 0;color:var(--muted)}
+h2{font:24px/1.2 Georgia,serif;margin:27px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:12px}
+article{background:#fff;border:1px solid var(--line);border-left:4px solid #db9d24;border-radius:12px;padding:16px}
+article h3{font-size:17px;line-height:1.3;margin:0 0 6px}
+a{color:var(--maroon);text-underline-offset:3px}
+article p{margin:5px 0;color:var(--muted);font-size:14px}
+.employer{font-weight:650}.employer span{font-weight:400}
+article .salary{color:#75183c;font-weight:700}
+article .past{display:inline-block;background:#ffeb9f;color:#6e440c;padding:2px 8px;border-radius:20px}
+[hidden], article .past[hidden]{display:none}
+:focus-visible{outline:3px solid #75183c;outline-offset:3px}
+.cursor-spark{
+  position:fixed;z-index:10;pointer-events:none;
+  color:var(--gold);text-shadow:0 0 2px #75183c,0 0 8px #f3a916;
+  font-size:18px;line-height:1;
+  animation:cursor-twinkle 540ms ease-out both;
+}
+.cursor-spark:nth-child(even){color:var(--maroon);font-size:12px;text-shadow:0 0 5px var(--gold)}
+@keyframes cursor-twinkle{
+  from{opacity:1;transform:translate(-50%,-50%) scale(.7)}
+  30%{opacity:1;transform:translate(-50%,-75%) scale(1.15) rotate(15deg)}
+  to{opacity:0;transform:translate(-50%,-140%) scale(.2) rotate(40deg)}
+}
+@media (prefers-reduced-motion:reduce){.cursor-spark{display:none}}
+#progress{font-weight:700;color:var(--maroon);margin:8px 0}
+.card-actions{display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px;margin-top:10px}
+.card-actions button{font:inherit;font-size:13px;font-weight:650;cursor:pointer;padding:5px 9px;border:1px solid #ab7785;border-radius:8px;background:#fff7da;color:var(--maroon)}
+article.applied h3 a{text-decoration:line-through}
+article.applied{border-left-color:var(--maroon);background:#fffbf0}
+article .applied-date{color:var(--maroon);font-weight:700}
+#graveyard{margin-top:28px;padding:12px 16px;border:1px solid var(--line);border-radius:12px}
+#graveyard summary{cursor:pointer;font-weight:700}
+#graveyard .grid{margin-top:12px}
+#dismissal-popup{position:fixed;z-index:5;right:16px;bottom:16px;max-width:calc(100% - 32px);margin:0;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 18px #42132826}
+</style>
+</head>
+<body><main>
+<header><p class="spark" aria-hidden="true">✦</p><h1>Job Sweep Archive</h1>
+<p>Pick up wherever you left off. Browse the November 9 search and past job sweeps in one place.</p>
+<p>Pay and deadlines reflect the original listings. Check the posting for current availability.</p></header>
+<div class="tools" hidden id="tools">
+<label class="search">Search listings <input type="search" id="query" placeholder="Title, employer, location, or keyword"></label>
+<label class="toggle"><input type="checkbox" id="hide-past"> Hide passed deadlines</label>
+</div>
+<p id="progress" role="status"></p>
+<p id="save-note" role="status" hidden>Saving is unavailable in this browser. Changes will last until you reload this page.</p>
+<p id="count" role="status"></p>
+<section class="group"><h2>Best matches to review first</h2><div class="grid"><article data-deadline="">
+<h3><a href="https://umd.wd1.myworkdayjobs.com/UMCP/job/University-of-Maryland-College-Park/Program-Director--Advancement-Communications--VPUR-_JR104911">Program Director, Advancement Communications</a></h3>
+<p class="employer">University of Maryland <span>· College Park, MD</span></p>
+<p class="salary">$122,345–$145,000</p>
+<p class="status"><strong>Recorded status</strong> · Listed open until filled</p>
+<p>Campaign strategy, CRM, analytics, and vendor leadership.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://marylandconnect.wd1.myworkdayjobs.com/BSU_Careers/job/Bowie-State-University/Director-of-Economic-Development-Strategic-Partnerships_JR102071">Director of Economic Development Strategic Partnerships</a></h3>
+<p class="employer">Bowie State University <span>· Bowie, MD</span></p>
+<p class="salary">$120,000–$130,000</p>
+<p class="status"><strong>Recorded status</strong> · Listed open, no close date posted</p>
+<p>Public-private partnerships and workforce development. Requires five years of related experience.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://umd.wd1.myworkdayjobs.com/en-US/UMCP/job/Manager--Communications_JR105041">Manager, Communications</a></h3>
+<p class="employer">UMD Center for Global Sustainability <span>· College Park, MD</span></p>
+<p class="salary">$91,040–$109,248</p>
+<p class="status"><strong>Recorded status</strong> · Listed open until filled. Oct. 23 priority date passed.</p>
+<p>Media, digital content, and outreach. Confirm pay above $95,000.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://towson.taleo.net/careersection/ex/jobdetail.ftl?job=260000TZ">Director of Major Gifts, College of Liberal Arts</a></h3>
+<p class="employer">Towson University <span>· Towson, MD</span></p>
+<p class="salary">$100,000–$110,000 targeted hiring range</p>
+<p class="status"><strong>Recorded status</strong> · No close date found</p>
+<p>Accepts sales or relationship management. Involves major-gift solicitation.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://facultyjobs.umbc.edu/cw/en-us/job/495417/director-of-foundation-engagement">Director of Foundation Engagement</a></h3>
+<p class="employer">UMBC <span>· Baltimore County, MD</span></p>
+<p class="salary">$107,000–$120,000</p>
+<p class="status"><strong>Recorded status</strong> · Open until filled</p>
+<p>Foundation partnerships and proposal strategy. Requires a track record of fund development.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<section class="group"><h2>Related roles outside government</h2><div class="grid"><article data-deadline="">
+<h3><a href="https://diversityjobs.com/career/18865127/Director-Strategic-Communications-Marketing-Johns-Hopkins-Innovation-Commercial-Partnership-Maryland-Baltimore">Director, Strategic Communications &amp; Marketing</a></h3>
+<p class="employer">Johns Hopkins University <span>· Baltimore, MD</span></p>
+<p class="salary">$119,515–$209,100 · $160,000 target</p>
+<p class="status"><strong>Recorded status</strong> · No close date found</p>
+<p>Leads communications and marketing for Innovation &amp; Commercial Partnerships. Original link is to DiversityJobs.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-16">
+<h3><a href="https://www.medamd.com/job/meda-executive-director/">Executive Director</a></h3>
+<p class="employer">Maryland Economic Development Association <span>· Maryland remote with travel</span></p>
+<p class="salary">$100,000–$125,000</p>
+<p class="status"><strong>Recorded status</strong> · Nov. 16, 2026</p>
+<p>Board communications, sponsorships, and events. Requires five years of related management.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<section class="group"><h2>Public sector deadlines</h2><div class="grid"><article data-deadline="2026-11-10">
+<h3><a href="https://www.jobapscloud.com/MD/sup/bulpreview.asp?R1=26&amp;R2=007787&amp;R3=0003&amp;b=">Civic Designer, Innovation Team</a></h3>
+<p class="employer">Maryland Governor’s Office <span>· Annapolis or Baltimore, MD</span></p>
+<p class="salary">$87,253–$100,231</p>
+<p class="status"><strong>Recorded status</strong> · Nov. 10, 2026 · 11:59 p.m. ET</p>
+<p>Requires a portfolio showing user or community research and communications design.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-10">
+<h3><a href="https://www.jobapscloud.com/MD/sup/bulpreview.asp?R1=26&amp;R2=005478&amp;R3=0037&amp;b=">Assistant Director for Emergency Food Programs &amp; Special Project</a></h3>
+<p class="employer">Maryland DHS <span>· Baltimore, MD</span></p>
+<p class="salary">$93,138–$120,491</p>
+<p class="status"><strong>Recorded status</strong> · Nov. 10, 2026 · 11:59 p.m. ET</p>
+<p>Nonprofit partnerships, outreach, and substantial grant oversight. Requires three years of supervision.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-15">
+<h3><a href="https://www.jobapscloud.com/MD/sup/bulpreview.asp?R1=26&amp;R2=007055&amp;R3=0001&amp;b=">Senior Managing Director, Major &amp; Planned Giving</a></h3>
+<p class="employer">Maryland Public Television <span>· Owings Mills, MD</span></p>
+<p class="salary">$130,000–$165,000</p>
+<p class="status"><strong>Recorded status</strong> · Nov. 15, 2026 · 11:59 p.m. ET</p>
+<p>Requires direct experience closing five-figure gifts.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-19">
+<h3><a href="https://www.jobapscloud.com/MD/sup/bulpreview.asp?R1=26&amp;R2=005477&amp;R3=0037&amp;b=">Assistant Director, Reinvest Baltimore</a></h3>
+<p class="employer">Maryland DHCD <span>· Baltimore, MD</span></p>
+<p class="salary">$87,253–$106,366 hiring range</p>
+<p class="status"><strong>Recorded status</strong> · Nov. 19, 2026 · 11:59 p.m. ET</p>
+<p>Community partnerships and program oversight. Requires five years in community development.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://mml.mcjobboard.net/jobs/235319">Economic Development Director</a></h3>
+<p class="employer">City of Bowie <span>· Bowie, MD</span></p>
+<p class="salary">$125,000–$155,000</p>
+<p class="status"><strong>Recorded status</strong> · Board lists Nov. 24. Notice says open until filled.</p>
+<p>Business attraction, retention, and redevelopment. Requires seven years of related experience.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<section class="group"><h2>Confirm before applying</h2><div class="grid"><article data-deadline="">
+<h3><a href="https://www.linkedin.com/jobs/view/director-of-communications-media-relations-4471672877">Director of Communications &amp; Media Relations</a></h3>
+<p class="employer">Prince George’s County Council District 8 <span>· Largo, MD</span></p>
+<p class="salary">$85,000–$115,000</p>
+<p class="status"><strong>Recorded status</strong> · No deadline posted. Status unconfirmed.</p>
+<p>Media inquiries, talking points, and stakeholder communications. Original link is to LinkedIn.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://www.governmentjobs.com/careers/mdotmd/jobs/4724072/director-of-digital-marketing-and-content">Director of Digital Marketing and Content</a></h3>
+<p class="employer">Maryland Transit Administration <span>· Baltimore, MD</span></p>
+<p class="salary">$97,972–$152,528</p>
+<p class="status"><strong>Recorded status</strong> · 2024 continuous posting. No Apply button found.</p>
+<p>Strong digital marketing fit. Confirm a current recruitment before preparing an application.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<section class="group"><h2>More public sector listings</h2><div class="grid"><article data-deadline="">
+<h3><a href="https://www.governmentjobs.com/careers/stmarysmd/jobs/5529766/deputy-director-of-economic-development">Deputy Director of Economic Development</a></h3>
+<p class="employer">St. Mary’s County <span>· Leonardtown, MD</span></p>
+<p class="salary">$109,117–$120,370 hiring range</p>
+<p class="status"><strong>Recorded status</strong> · Continuous</p>
+<p>Budgets, staffing, business retention, and county partnerships.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://www.governmentjobs.com/jobs/5515737-0/chief-of-business-services">Chief of Business Services</a></h3>
+<p class="employer">Charles County <span>· White Plains, MD</span></p>
+<p class="salary">$104,147–$143,203 hiring range</p>
+<p class="status"><strong>Recorded status</strong> · Open until filled. Nov. 3 priority date passed.</p>
+<p>Business outreach, retention, and financing. Requires direct business-support experience.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://marylandconnect.wd1.myworkdayjobs.com/en-US/SU_Careers/details/Director--Alumni-Engagement_JR101824">Director, Alumni Engagement</a></h3>
+<p class="employer">Salisbury University <span>· Salisbury, MD</span></p>
+<p class="salary">$100,000–$105,000</p>
+<p class="status"><strong>Recorded status</strong> · Open until filled. Nov. 8 priority date passed.</p>
+<p>Events and community building overlap. Calls for higher-education experience.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://umd.wd1.myworkdayjobs.com/en-US/UMCP/job/Director-of-Development--Do-Good--VPUR-_JR105044">Director of Development, Do Good</a></h3>
+<p class="employer">University of Maryland <span>· College Park, MD</span></p>
+<p class="salary">$146,522–$170,000</p>
+<p class="status"><strong>Recorded status</strong> · Listed open until filled. Oct. 15 priority date passed.</p>
+<p>Fundraising and donor cultivation for the Do Good initiative.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://umd.wd1.myworkdayjobs.com/en-US/UMCP/job/University-of-Maryland-College-Park/Senior-Director-of-Development--Principal-Gifts--VPUR-_JR105071">Senior Director of Development, Principal Gifts</a></h3>
+<p class="employer">University of Maryland <span>· College Park, MD</span></p>
+<p class="salary">$154,636–$185,000</p>
+<p class="status"><strong>Recorded status</strong> · Listed open until filled. Oct. 15 priority date passed.</p>
+<p>Personally solicits and closes principal gifts. Oversees donor strategy.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://listings.umbc.edu/en-us/job/495293/director-of-planned-giving">Director of Planned Giving</a></h3>
+<p class="employer">UMBC <span>· Baltimore County, MD</span></p>
+<p class="salary">$134,000–$151,000</p>
+<p class="status"><strong>Recorded status</strong> · Open until filled</p>
+<p>Requires five years in planned giving or trust and estate law.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<section class="group"><h2>Job Sweep · Nov. 11, 2026</h2><div class="grid"><article data-deadline="">
+<h3><a href="https://american.wd1.myworkdayjobs.com/en-US/AU/job/Main-Campus-Washington-DC/Director-of-Strategic-Communications_R5100">Director of Strategic Communications (Kogod School of Business)</a></h3>
+<p class="employer">American University <span>· Washington, DC</span></p>
+<p class="salary">$103,000 - $115,000</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://nrmca.isolvedhire.com/jobs/1887671">Director, Communications</a></h3>
+<p class="employer">National Ready Mixed Concrete Association (NRMCA) <span>· Alexandria, VA</span></p>
+<p class="salary">$120,000 - $150,000 + incentive</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://www.equimundo.org/wp-content/uploads/2026/10/Deputy-Director-of-Comms-Job-Description-October-2026-1.pdf">Deputy Director of Communications</a></h3>
+<p class="employer">Equimundo <span>· Washington, DC area (hybrid)</span></p>
+<p class="salary">$110,000 - $130,000</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://ncan.bamboohr.com/careers/25">Senior Director, Communications</a></h3>
+<p class="employer">National College Attainment Network (NCAN) <span>· Washington, DC</span></p>
+<p class="salary">$164,785 (fixed)</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://www.aasld.org/aasld-careers">Senior Director, Communications &amp; Marketing</a></h3>
+<p class="employer">American Association for the Study of Liver Diseases (AASLD) <span>· Remote (DC area preferred)</span></p>
+<p class="salary">$138,000 - $185,000</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+<p>Original link opens the employer’s careers page.</p>
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=09b61499-41ab-4413-a2f7-4f7474096cf9&amp;ccId=19000101_000001&amp;jobId=667446&amp;lang=en_US">Deputy Director of Communications</a></h3>
+<p class="employer">FairVote <span>· Silver Spring, MD</span></p>
+<p class="salary">$95,000 - $120,000</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="">
+<h3><a href="https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=f6281961-94a1-468a-8b53-78b84cc3a14c&amp;ccId=19000101_000001&amp;source=CC2&amp;lang=en_US&amp;selectedMenuKey=CareerCenter&amp;jobId=598702">Sr. Manager, CES Communications</a></h3>
+<p class="employer">Consumer Technology Association (CTA) <span>· Arlington, VA</span></p>
+<p class="salary">$100,000 - $125,000</p>
+<p class="status"><strong>Recorded status</strong> · No deadline recorded</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-19">
+<h3><a href="https://www.usajobs.gov:443/job/891843100">Trademark Social Media Specialist, GS-13</a></h3>
+<p class="employer">Patent and Trademark Office <span>· Alexandria, VA</span></p>
+<p class="salary">$121,785 – $158,322 per year</p>
+<p class="status"><strong>Recorded status</strong> · Closes 11/19/2026</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<section class="group"><h2>Job Sweep · Nov. 10, 2026</h2><div class="grid"><article data-deadline="2026-11-16">
+<h3><a href="https://www.usajobs.gov/job/891648900">Public Affairs Specialist (Social Media), GS-14</a></h3>
+<p class="employer">Drug Enforcement Administration (DOJ) <span>· Arlington, VA</span></p>
+<p class="salary">$143,913 - $187,093 per year</p>
+<p class="status"><strong>Recorded status</strong> · Closes 11/16/2026</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-17">
+<h3><a href="https://www.usajobs.gov/job/891178200">Public Affairs Specialist, GS-14</a></h3>
+<p class="employer">Federal Trade Commission <span>· Washington, DC</span></p>
+<p class="salary">$143,913 - $187,093 per year</p>
+<p class="status"><strong>Recorded status</strong> · Closes 11/17/2026</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article>
+<article data-deadline="2026-11-20">
+<h3><a href="https://www.usajobs.gov/job/891889200">Development Specialist</a></h3>
+<p class="employer">National Gallery of Art <span>· Washington, DC</span></p>
+<p class="salary">$85,447 - $111,087 per year</p>
+<p class="status"><strong>Recorded status</strong> · Closes 11/20/2026</p>
+
+<p class="past" hidden>Listed deadline passed</p>
+</article></div></section>
+<details id="graveyard" hidden>
+<summary id="graveyard-title">Job Graveyard (0)</summary>
+<p id="graveyard-empty">No dismissed jobs yet.</p>
+<div class="grid" id="graveyard-jobs"></div>
+</details>
+<div id="dismissal-popup" class="card-actions" hidden>
+<span role="status" id="dismissal-message"></span>
+<button type="button" id="undo-dismissal">JK, put it back!</button>
+<button type="button" id="close-dismissal" aria-label="Close dismissal popup">×</button>
+</div>
+</main>
+<script>
+const query = document.querySelector('#query');
+const hidePast = document.querySelector('#hide-past');
+const groups = [...document.querySelectorAll('.group')].map(section => ({
+  section, cards: [...section.querySelectorAll('article')]
+}));
+const storageKey = 'job-sweep-applied-v1';
+const saveNote = document.querySelector('#save-note');
+const dismissedKey = 'job-sweep-dismissed-v1';
+const graveyard = document.querySelector('#graveyard');
+const graveyardJobs = document.querySelector('#graveyard-jobs');
+const popup = document.querySelector('#dismissal-popup');
+const popupMessage = document.querySelector('#dismissal-message');
+const undoDismissal = document.querySelector('#undo-dismissal');
+let undoCard;
+
+function loadState(key) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || '{}');
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) return saved;
+  } catch {
+    saveNote.hidden = false;
+  }
+  return {};
+}
+
+function saveState(key, state) {
+  try {
+    localStorage.setItem(key, JSON.stringify(state));
+  } catch {
+    saveNote.hidden = false;
+  }
+}
+
+const applied = loadState(storageKey);
+const dismissed = loadState(dismissedKey);
+
+function updateGraveyard() {
+  const count = graveyardJobs.childElementCount;
+  document.querySelector('#graveyard-title').textContent = 'Job Graveyard (' + count + ')';
+  document.querySelector('#graveyard-empty').hidden = count > 0;
+}
+
+function closePopup() {
+  popup.hidden = true;
+  popupMessage.textContent = '';
+  undoCard = undefined;
+}
+
+undoDismissal.addEventListener('click', () => undoCard?.());
+document.querySelector('#close-dismissal').addEventListener('click', () => {
+  closePopup();
+  query.focus();
+});
+
+const appliedDate = new Intl.DateTimeFormat(undefined, {dateStyle: 'medium'});
+function updateProgress() {
+  const total = groups.flatMap(group => group.cards)
+    .filter(card => Object.hasOwn(applied, card.querySelector('h3 a').getAttribute('href'))).length;
+  document.querySelector('#progress').textContent =
+    total + (total === 1 ? ' application marked' : ' applications marked');
+}
+for (const card of groups.flatMap(group => group.cards)) {
+  const position = document.createComment('Original job card position');
+  card.before(position);
+  const heading = card.querySelector('h3');
+  const url = heading.querySelector('a').getAttribute('href');
+  const details = document.createElement('div');
+  while (heading.nextSibling) details.append(heading.nextSibling);
+  const date = document.createElement('p');
+  date.className = 'applied-date';
+  const actions = document.createElement('div');
+  actions.className = 'card-actions';
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  const mark = document.createElement('button');
+  mark.type = 'button';
+  const dismiss = document.createElement('button');
+  dismiss.type = 'button';
+  actions.append(mark, dismiss, toggle);
+  card.append(date, details, actions);
+
+  function showDetails(show) {
+    details.hidden = !show;
+    toggle.textContent = show ? 'Hide details' : 'Show details';
+    toggle.setAttribute('aria-expanded', String(show));
+  }
+  function refreshCard() {
+    const done = Object.hasOwn(applied, url);
+    card.classList.toggle('applied', done);
+    date.hidden = !done;
+    date.textContent = done ? 'Applied on ' + appliedDate.format(new Date(applied[url])) : '';
+    mark.textContent = done ? 'Undo applied' : 'Mark as applied';
+    const buried = Object.hasOwn(dismissed, url);
+    mark.hidden = buried;
+    toggle.hidden = buried || !done;
+    dismiss.textContent = buried ? 'Restore' : 'Not relevant to me';
+    showDetails(buried || !done);
+  }
+  toggle.addEventListener('click', () => showDetails(details.hidden));
+  mark.addEventListener('click', () => {
+    if (Object.hasOwn(applied, url)) delete applied[url];
+    else applied[url] = new Date().toISOString();
+    saveState(storageKey, applied);
+    refreshCard();
+    updateProgress();
+    filter();
+  });
+  function restore() {
+    delete dismissed[url];
+    saveState(dismissedKey, dismissed);
+    position.after(card);
+    if (undoCard === restore) closePopup();
+    refreshCard();
+    updateGraveyard();
+    filter();
+    (card.hidden ? query : dismiss).focus();
+  }
+
+  dismiss.addEventListener('click', () => {
+    if (Object.hasOwn(dismissed, url)) {
+      restore();
+      return;
+    }
+    dismissed[url] = true;
+    saveState(dismissedKey, dismissed);
+    graveyardJobs.append(card);
+    refreshCard();
+    updateGraveyard();
+    filter();
+    undoCard = restore;
+    popup.hidden = false;
+    popupMessage.textContent = 'Fuck that job anyways.';
+    undoDismissal.focus();
+  });
+
+  if (Object.hasOwn(dismissed, url)) graveyardJobs.append(card);
+  refreshCard();
+}
+graveyard.hidden = false;
+updateGraveyard();
+updateProgress();
+
+const parts = new Intl.DateTimeFormat('en', {
+  timeZone:'America/New_York', year:'numeric', month:'2-digit', day:'2-digit'
+}).formatToParts();
+const today = ['year','month','day'].map(type => parts.find(part => part.type === type).value).join('-');
+function filter() {
+  const terms = query.value.toLowerCase().trim().split(/\s+/);
+  let count = 0;
+  for (const {section,cards} of groups) {
+    for (const card of cards) {
+      const deadline = card.dataset.deadline;
+      const past = Boolean(deadline && deadline < today);
+      card.querySelector('.past').hidden = !past;
+      if (card.parentElement === graveyardJobs) {
+        card.hidden = false;
+        continue;
+      }
+      card.hidden = (hidePast.checked && past) ||
+        !terms.every(term => card.textContent.toLowerCase().includes(term));
+      if (!card.hidden) count++;
+    }
+    section.hidden = cards.every(card => card.hidden || card.parentElement === graveyardJobs);
+  }
+  document.querySelector('#count').textContent = count === 0
+    ? 'No listings match these filters.'
+    : count + (count === 1 ? ' listing' : ' listings');
+}
+document.querySelector('#tools').hidden = false;
+query.addEventListener('input', filter);
+hidePast.addEventListener('change', filter);
+filter();
+const allowSparkles = window.matchMedia('(prefers-reduced-motion: no-preference)');
+let lastSpark = -Infinity;
+window.addEventListener('pointermove', event => {
+  if (!allowSparkles.matches || event.pointerType !== 'mouse' ||
+      event.timeStamp - lastSpark < 45) return;
+
+  lastSpark = event.timeStamp;
+  const spark = document.createElement('span');
+  spark.className = 'cursor-spark';
+  spark.textContent = '✦';
+  spark.setAttribute('aria-hidden', 'true');
+  spark.style.left = (event.clientX + 8) + 'px';
+  spark.style.top = (event.clientY + 8) + 'px';
+  document.body.append(spark);
+  window.setTimeout(() => spark.remove(), 550);
+}, {passive: true});
+</script></body></html>
