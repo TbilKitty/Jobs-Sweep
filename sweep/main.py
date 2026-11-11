@@ -7,6 +7,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import datetime as dt
 import os
 import smtplib
@@ -21,7 +22,7 @@ from zoneinfo import ZoneInfo
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from . import ai, usajobs
+from . import ai, site, usajobs
 from .checks import SentLog, _parse_date, link_ok, rule_problems
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -43,7 +44,7 @@ def sort_key(j: dict):
     return (0, closes.toordinal(), 0) if closes else (1, 0, -posted.toordinal())
 
 
-def render(cfg: dict, jobs: list[dict], today: dt.datetime) -> tuple[str, str, str]:
+def render(cfg: dict, jobs: list[dict], today: dt.datetime, tracker_link: str = "") -> tuple[str, str, str]:
     groups = OrderedDict((s, []) for s in ai.SECTIONS)
     for j in jobs:
         groups.setdefault(j["section"], []).append(j)
@@ -55,8 +56,10 @@ def render(cfg: dict, jobs: list[dict], today: dt.datetime) -> tuple[str, str, s
     env = Environment(loader=FileSystemLoader(ROOT / "sweep" / "templates"), autoescape=select_autoescape(["html"]))
     html = env.get_template("email.html").render(
         date_long=date_long, total=len(jobs), name=cfg["candidate"]["name"], min_k=cfg["min_salary"] // 1000,
-        sections=sections, empty_sections=empty, review_mode=cfg["review_mode"])
+        sections=sections, empty_sections=empty, review_mode=cfg["review_mode"], tracker_link=tracker_link)
     lines = [f"Job Sweep — {date_long} — {len(jobs)} new roles", ""]
+    if tracker_link:
+        lines += [f"All jobs + mark what you've applied to: {tracker_link}", ""]
     for s, js in sections:
         lines += [s.upper(), ""]
         for j in js:
@@ -105,7 +108,8 @@ def main() -> int:
     cfg = yaml.safe_load((ROOT / "config.yaml").read_text())
     now = dt.datetime.now(ET)
     today = now.date()
-    log = SentLog(ROOT / "data" / "sent_jobs.json")
+    archive = site.load()
+    log = SentLog(ROOT / "data" / "sent_jobs.json", site.known_jobs(archive))
     notes = []
 
     candidates: list[dict] = []
@@ -142,7 +146,10 @@ def main() -> int:
     final = [j for j in reviewed if link_ok(j)]
     print(f"Final: {len(final)} jobs")
 
-    subject, html, text = render(cfg, final, now)
+    tracker = (cfg.get("tracker_url") or "").rstrip("/")
+    anchor = f"#sweep-{today.isoformat()}" if final else ""
+    tracker_link = f"{tracker}/{anchor}" if tracker else ""
+    subject, html, text = render(cfg, final, now, tracker_link)
     out = ROOT / "out"
     out.mkdir(exist_ok=True)
     (out / "email.html").write_text(html)
@@ -151,8 +158,13 @@ def main() -> int:
         print("NOTE:", n)
 
     if args.dry_run:
-        print("Dry run — nothing sent. See out/email.html")
+        gid = site.add_run(archive, final, today, save=False) if final else None
+        site.render(archive, now, gid, out=out / "archive-preview.html")
+        print("Dry run — nothing sent or saved. See out/email.html and out/archive-preview.html")
         return 0
+    # Update the archive page first, so the email's link already has this run's jobs once it deploys.
+    gid = site.add_run(archive, final, today) if final else None
+    site.render(archive, now, gid)
     send(cfg, subject, html, text)
     log.add(final, today.isoformat())
     (ROOT / "data" / "last_run.txt").write_text(f"{now.isoformat()} sent {len(final)} jobs\n")
