@@ -6,6 +6,8 @@
 # Set to false when you're ready for David to receive them.
 review_mode: true
 
+tracker_url: "https://jobs-sweep.readuvall.workers.dev"
+
 email:
   from_name: "Job Sweep"
   to: ["davidleerodgers@gmail.com"]   # used when review_mode is false
