@@ -4,7 +4,7 @@
 
 # REVIEW MODE: true = emails go ONLY to the reviewer below.
 # Set to false when you're ready for David to receive them.
-review_mode: true
+review_mode: false
 
 tracker_url: "https://jobs-sweep.readuvall.workers.dev"
 
