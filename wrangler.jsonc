@@ -5,11 +5,8 @@
   "assets": {
     "directory": "./site",
     "binding": "ASSETS"
-  }
-
-  // STEP 2 (shared "applied" marks): create a KV namespace in Cloudflare, then delete the two slashes
-  // at the start of each line below and paste the namespace's ID between the quotes.
-  // ,"kv_namespaces": [
-  //   { "binding": "APPLIED", "id": "b5b3bcbd7209459a998baa6e6ab8f948" }
-  // ]
+  },
+  "kv_namespaces": [
+    { "binding": "APPLIED", "id": "b5b3bcbd7209459a998baa6e6ab8f948" }
+  ]
 }
