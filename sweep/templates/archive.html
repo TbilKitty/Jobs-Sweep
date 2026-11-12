@@ -55,6 +55,11 @@ article .past{display:inline-block;background:#ffeb9f;color:#6e440c;padding:2px 
 article.applied h3 a{text-decoration:line-through}
 article.applied{border-left-color:var(--maroon);background:#fffbf0}
 article .applied-date{color:var(--maroon);font-weight:700}
+#graveyard{margin-top:28px;padding:12px 16px;border:1px solid var(--line);border-radius:12px}
+#graveyard summary{cursor:pointer;font-weight:700}
+#graveyard .grid{margin-top:12px}
+#dismissal-popup{position:fixed;z-index:5;right:16px;bottom:16px;max-width:calc(100% - 32px);margin:0;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 18px #42132826}
+#dismissal-popup[hidden]{display:none}
 </style>
 </head>
 <body><main>
@@ -82,7 +87,17 @@ article .applied-date{color:var(--maroon);font-weight:700}
 <p class="past" hidden>Listed deadline passed</p>
 </article>
 {% endfor %}</div></section>
-{% endfor %}</main>
+{% endfor %}<details id="graveyard" hidden>
+<summary><span aria-hidden="true">🪦</span> <span id="graveyard-title">Job Graveyard (0)</span></summary>
+<p id="graveyard-empty">No dismissed jobs yet.</p>
+<div class="grid" id="graveyard-jobs"></div>
+</details>
+<div id="dismissal-popup" class="card-actions" hidden>
+<span role="status" id="dismissal-message"></span>
+<button type="button" id="undo-dismissal">JK, put it back!</button>
+<button type="button" id="close-dismissal" aria-label="Close dismissal popup">×</button>
+</div>
+</main>
 <script>
 const query = document.querySelector('#query');
 const hidePast = document.querySelector('#hide-past');
@@ -126,8 +141,49 @@ function updateProgress() {
   document.querySelector('#progress').textContent =
     total + (total === 1 ? ' application marked' : ' applications marked');
 }
+const dismissedKey = 'job-sweep-dismissed-v1';
+const graveyard = document.querySelector('#graveyard');
+const graveyardJobs = document.querySelector('#graveyard-jobs');
+const popup = document.querySelector('#dismissal-popup');
+const popupMessage = document.querySelector('#dismissal-message');
+const undoDismissal = document.querySelector('#undo-dismissal');
+let dismissed = {};
+let undoCard;
+
+try {
+  const saved = JSON.parse(localStorage.getItem(dismissedKey) || '{}');
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) dismissed = saved;
+} catch {
+  saveNote.hidden = false;
+}
+
+function saveDismissals() {
+  try { localStorage.setItem(dismissedKey, JSON.stringify(dismissed)); }
+  catch { saveNote.hidden = false; }
+}
+
+function updateGraveyard() {
+  const count = graveyardJobs.childElementCount;
+  document.querySelector('#graveyard-title').textContent = 'Job Graveyard (' + count + ')';
+  document.querySelector('#graveyard-empty').hidden = count > 0;
+}
+
+function closePopup() {
+  popup.hidden = true;
+  popupMessage.textContent = '';
+  undoCard = undefined;
+}
+
+undoDismissal.addEventListener('click', () => undoCard?.());
+document.querySelector('#close-dismissal').addEventListener('click', () => {
+  closePopup();
+  query.focus();
+});
+
 const refreshers = [];
 for (const card of allCards) {
+  const position = document.createComment('Original job card position');
+  card.before(position);
   const heading = card.querySelector('h3');
   const url = heading.querySelector('a').getAttribute('href');
   const details = document.createElement('div');
@@ -140,7 +196,9 @@ for (const card of allCards) {
   toggle.type = 'button';
   const mark = document.createElement('button');
   mark.type = 'button';
-  actions.append(mark, toggle);
+  const dismiss = document.createElement('button');
+  dismiss.type = 'button';
+  actions.append(mark, dismiss, toggle);
   card.append(date, details, actions);
 
   function showDetails(show) {
@@ -154,8 +212,11 @@ for (const card of allCards) {
     date.hidden = !done;
     date.textContent = done ? 'Applied on ' + appliedDate.format(new Date(applied[url])) : '';
     mark.textContent = done ? 'Undo applied' : 'Mark as applied';
-    toggle.hidden = !done;
-    showDetails(!done);
+    const buried = Object.hasOwn(dismissed, url);
+    mark.hidden = buried;
+    toggle.hidden = buried || !done;
+    dismiss.textContent = buried ? 'Restore' : 'Not relevant to me';
+    showDetails(buried || !done);
   }
   refreshers.push(refreshCard);
   toggle.addEventListener('click', () => showDetails(details.hidden));
@@ -169,8 +230,39 @@ for (const card of allCards) {
     updateProgress();
     filter();
   });
+  function restore() {
+    delete dismissed[url];
+    saveDismissals();
+    position.after(card);
+    if (undoCard === restore) closePopup();
+    refreshCard();
+    updateGraveyard();
+    filter();
+    (card.hidden ? query : dismiss).focus();
+  }
+
+  dismiss.addEventListener('click', () => {
+    if (Object.hasOwn(dismissed, url)) {
+      restore();
+      return;
+    }
+    dismissed[url] = true;
+    saveDismissals();
+    graveyardJobs.append(card);
+    refreshCard();
+    updateGraveyard();
+    filter();
+    undoCard = restore;
+    popup.hidden = false;
+    popupMessage.textContent = 'Fuck that job anyways.';
+    undoDismissal.focus();
+  });
+
+  if (Object.hasOwn(dismissed, url)) graveyardJobs.append(card);
   refreshCard();
 }
+graveyard.hidden = false;
+updateGraveyard();
 updateProgress();
 
 const parts = new Intl.DateTimeFormat('en', {
@@ -186,11 +278,15 @@ function filter() {
       const past = Boolean(deadline && deadline < today);
       const isApplied = card.classList.contains('applied');
       card.querySelector('.past').hidden = !past;
+      if (card.parentElement === graveyardJobs) {
+        card.hidden = false;
+        continue;
+      }
       card.hidden = (hidePast.checked && past) || (hideApplied.checked && isApplied) ||
         !terms.every(term => card.textContent.toLowerCase().includes(term));
       if (!card.hidden) count++;
     }
-    section.hidden = cards.every(card => card.hidden);
+    section.hidden = cards.every(card => card.hidden || card.parentElement === graveyardJobs);
   }
   document.querySelector('#count').textContent = count === 0
     ? 'No listings match these filters.'
