@@ -420,6 +420,79 @@
           "section": "Virginia"
         }
       ]
+    },
+    {
+      "id": "sweep-2026-11-17",
+      "title": "Job Sweep · Nov. 17, 2026",
+      "kind": "sweep",
+      "date": "2026-11-17",
+      "jobs": [
+        {
+          "title": "Public Affairs Specialist, GS-15",
+          "url": "https://www.usajobs.gov:443/job/892951100",
+          "employer": "Department of State Headquarters",
+          "location": "Washington, DC",
+          "salary": "$169,279 – $197,200 per year",
+          "status": "Closes 11/30/2026",
+          "fit": "Director-level comms, media/PR, stakeholder engagement; GS‑15 federal grade is a stretch.",
+          "stretch": true,
+          "note": "",
+          "deadline": "2026-11-30",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Public Affairs Specialist, GS-13",
+          "url": "https://www.usajobs.gov:443/job/892567800",
+          "employer": "Department of State Headquarters",
+          "location": "Washington, DC",
+          "salary": "$121,785 – $158,322 per year",
+          "status": "Closes 11/19/2026",
+          "fit": "Director-level media/PR, stakeholder outreach, events; aligns with GS‑13 Public Affairs Specialist duties.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-11-19",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Digital Platforms & Systems Coordinator",
+          "url": "https://mdstad.com/careers/digital-platforms-systems-coordinator",
+          "employer": "Maryland Stadium Authority (Maryland Sports Commission)",
+          "location": "Baltimore, MD",
+          "salary": "$70,000.00 - $95,000.00 annually",
+          "status": "Closes 11/30/2026",
+          "fit": "Web/content management, data workflows, CRM automation; aligns with digital platforms owner in sports/tourism.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-11-30",
+          "section": "Maryland"
+        },
+        {
+          "title": "Public Relations Coordinator (PR & Mktg Spec IV)",
+          "url": "https://www.jobs.virginia.gov/jobs/public-relations-coordinator-culpeper-virginia-united-states-fairfax-county",
+          "employer": "Virginia Department of State Police",
+          "location": "Fairfax, VA",
+          "salary": "Hiring Range: $79,763 to $114,859 (Fairfax)",
+          "status": "Closes 11/20/2026",
+          "fit": "Media relations and PIO-style work; authored releases, managed crises, coordinated digital channels.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-11-20",
+          "section": "Virginia"
+        },
+        {
+          "title": "Director of Strategic Communications",
+          "url": "https://www.jobs.virginia.gov/jobs/director-of-strategic-communications-richmond-virginia-united-states-8dad37c1-0c6d-48d5-a580-2b55dafe98ad",
+          "employer": "Virginia Department of Energy",
+          "location": "Richmond, VA",
+          "salary": "Hiring Range: $130,000 - $145,000/annually",
+          "status": "Closes 12/01/2026",
+          "fit": "Director-level strategic communications, media liaison, plain-language content; led teams and complex programs across technical domains.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-01",
+          "section": "Virginia"
+        }
+      ]
     }
   ]
 }

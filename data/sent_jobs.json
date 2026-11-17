@@ -133,5 +133,50 @@
     "salary": "$132,000 - $150,000",
     "closes": "11/12/2026",
     "first_emailed": "2026-11-12"
+  },
+  {
+    "title": "Public Affairs Specialist, GS-15",
+    "employer": "Department of State Headquarters",
+    "url": "https://www.usajobs.gov:443/job/892951100",
+    "location": "Washington, DC",
+    "salary": "$169,279 – $197,200 per year",
+    "closes": "11/30/2026",
+    "first_emailed": "2026-11-17"
+  },
+  {
+    "title": "Public Affairs Specialist, GS-13",
+    "employer": "Department of State Headquarters",
+    "url": "https://www.usajobs.gov:443/job/892567800",
+    "location": "Washington, DC",
+    "salary": "$121,785 – $158,322 per year",
+    "closes": "11/19/2026",
+    "first_emailed": "2026-11-17"
+  },
+  {
+    "title": "Digital Platforms & Systems Coordinator",
+    "employer": "Maryland Stadium Authority (Maryland Sports Commission)",
+    "url": "https://mdstad.com/careers/digital-platforms-systems-coordinator",
+    "location": "Baltimore, MD",
+    "salary": "$70,000.00 - $95,000.00 annually",
+    "closes": "11/30/2026",
+    "first_emailed": "2026-11-17"
+  },
+  {
+    "title": "Public Relations Coordinator (PR & Mktg Spec IV)",
+    "employer": "Virginia Department of State Police",
+    "url": "https://www.jobs.virginia.gov/jobs/public-relations-coordinator-culpeper-virginia-united-states-fairfax-county",
+    "location": "Fairfax, VA",
+    "salary": "Hiring Range: $79,763 to $114,859 (Fairfax)",
+    "closes": "11/20/2026",
+    "first_emailed": "2026-11-17"
+  },
+  {
+    "title": "Director of Strategic Communications",
+    "employer": "Virginia Department of Energy",
+    "url": "https://www.jobs.virginia.gov/jobs/director-of-strategic-communications-richmond-virginia-united-states-8dad37c1-0c6d-48d5-a580-2b55dafe98ad",
+    "location": "Richmond, VA",
+    "salary": "Hiring Range: $130,000 - $145,000/annually",
+    "closes": "12/01/2026",
+    "first_emailed": "2026-11-17"
   }
 ]
