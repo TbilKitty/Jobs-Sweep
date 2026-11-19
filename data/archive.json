@@ -493,6 +493,105 @@
           "section": "Virginia"
         }
       ]
+    },
+    {
+      "id": "sweep-2026-11-19",
+      "title": "Job Sweep · Nov. 19, 2026",
+      "kind": "sweep",
+      "date": "2026-11-19",
+      "jobs": [
+        {
+          "title": "Public Affairs Specialist, GS-14",
+          "url": "https://www.usajobs.gov:443/job/893431200",
+          "employer": "Treasury, Financial Crimes Enforcement Network",
+          "location": "Washington, DC",
+          "salary": "$143,913 – $187,093 per year",
+          "status": "Closes 12/02/2026",
+          "fit": "Public affairs GS‑14; strong media relations/press experience; lacks financial crimes subject-matter depth.",
+          "stretch": true,
+          "note": "",
+          "deadline": "2026-12-02",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Deputy Director, Communications, GS-14",
+          "url": "https://www.usajobs.gov:443/job/893234800",
+          "employer": "National Gallery of Art",
+          "location": "Washington, DC",
+          "salary": "$143,913 – $187,093 per year",
+          "status": "Closes 12/02/2026",
+          "fit": "Deputy comms leadership aligns; led teams, PR, digital, events, budgets at national brands.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-02",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Health Communications Specialist, GS-13",
+          "url": "https://www.usajobs.gov:443/job/893472600",
+          "employer": "Centers for Medicare & Medicaid Services",
+          "location": "Woodlawn, MD",
+          "salary": "$118,984 – $158,322 per year",
+          "status": "Closes 11/25/2026",
+          "fit": "Seasoned comms/marketing lead; email, web content, PR expertise matches GS‑13 health comms.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-11-25",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Strategic Engagement Advisor, GS-12/14",
+          "url": "https://www.usajobs.gov:443/job/893437700",
+          "employer": "Treasury, Financial Crimes Enforcement Network",
+          "location": "Washington, DC",
+          "salary": "$102,415 – $187,093 per year",
+          "status": "Closes 11/30/2026",
+          "fit": "Stakeholder engagement role; strong outreach/partnerships background; lacks financial crimes/industry policy experience.",
+          "stretch": true,
+          "note": "",
+          "deadline": "2026-11-30",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "COMMUNICATIONS OFFICER/ GS 19",
+          "url": "https://www.governmentjobs.com/jobs/5553598-0/communications-officer-gs-19",
+          "employer": "City of Alexandria — Department of Transportation & Environmental Services (T&ES)",
+          "location": "Alexandria, VA",
+          "salary": "$64,296.44 - $113,149.40 Annually",
+          "status": "Closes 12/11/2026",
+          "fit": "Infrastructure comms; translates complex initiatives, public engagement, web/social, email; managed community messaging and events.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-11",
+          "section": "Virginia"
+        },
+        {
+          "title": "MANAGEMENT ANALYST III/ GS 20 (Community Engagement)",
+          "url": "https://www.governmentjobs.com/careers/alexandria/jobs/5535587-0/management-analyst-iii-gs-20",
+          "employer": "City of Alexandria — Department of Project Implementation",
+          "location": "Alexandria, VA",
+          "salary": "$67,508.74 - $118,799.46 Annually",
+          "status": "Closes 11/20/2026",
+          "fit": "Leads community engagement; events, CRM segmentation, stakeholder databases, public meetings align with resume.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-11-20",
+          "section": "Virginia"
+        },
+        {
+          "title": "Public Information Officer",
+          "url": "https://www.governmentjobs.com/jobs/5534631-0/public-information-officer",
+          "employer": "Prince George County, Virginia — County Administration",
+          "location": "Prince George, VA",
+          "salary": "$67,600.00 - $108,160.00 Annually",
+          "status": "Open until filled (posted 10/29/2026)",
+          "fit": "PIO duties match: press releases, media events, social/web oversight, brand consistency, spokesperson experience.",
+          "stretch": false,
+          "note": "",
+          "deadline": "",
+          "section": "Virginia"
+        }
+      ]
     }
   ]
 }

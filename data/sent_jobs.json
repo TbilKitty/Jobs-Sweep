@@ -178,5 +178,68 @@
     "salary": "Hiring Range: $130,000 - $145,000/annually",
     "closes": "12/01/2026",
     "first_emailed": "2026-11-17"
+  },
+  {
+    "title": "Public Affairs Specialist, GS-14",
+    "employer": "Treasury, Financial Crimes Enforcement Network",
+    "url": "https://www.usajobs.gov:443/job/893431200",
+    "location": "Washington, DC",
+    "salary": "$143,913 – $187,093 per year",
+    "closes": "12/02/2026",
+    "first_emailed": "2026-11-19"
+  },
+  {
+    "title": "Deputy Director, Communications, GS-14",
+    "employer": "National Gallery of Art",
+    "url": "https://www.usajobs.gov:443/job/893234800",
+    "location": "Washington, DC",
+    "salary": "$143,913 – $187,093 per year",
+    "closes": "12/02/2026",
+    "first_emailed": "2026-11-19"
+  },
+  {
+    "title": "Health Communications Specialist, GS-13",
+    "employer": "Centers for Medicare & Medicaid Services",
+    "url": "https://www.usajobs.gov:443/job/893472600",
+    "location": "Woodlawn, MD",
+    "salary": "$118,984 – $158,322 per year",
+    "closes": "11/25/2026",
+    "first_emailed": "2026-11-19"
+  },
+  {
+    "title": "Strategic Engagement Advisor, GS-12/14",
+    "employer": "Treasury, Financial Crimes Enforcement Network",
+    "url": "https://www.usajobs.gov:443/job/893437700",
+    "location": "Washington, DC",
+    "salary": "$102,415 – $187,093 per year",
+    "closes": "11/30/2026",
+    "first_emailed": "2026-11-19"
+  },
+  {
+    "title": "COMMUNICATIONS OFFICER/ GS 19",
+    "employer": "City of Alexandria — Department of Transportation & Environmental Services (T&ES)",
+    "url": "https://www.governmentjobs.com/jobs/5553598-0/communications-officer-gs-19",
+    "location": "Alexandria, VA",
+    "salary": "$64,296.44 - $113,149.40 Annually",
+    "closes": "12/11/2026",
+    "first_emailed": "2026-11-19"
+  },
+  {
+    "title": "MANAGEMENT ANALYST III/ GS 20 (Community Engagement)",
+    "employer": "City of Alexandria — Department of Project Implementation",
+    "url": "https://www.governmentjobs.com/careers/alexandria/jobs/5535587-0/management-analyst-iii-gs-20",
+    "location": "Alexandria, VA",
+    "salary": "$67,508.74 - $118,799.46 Annually",
+    "closes": "11/20/2026",
+    "first_emailed": "2026-11-19"
+  },
+  {
+    "title": "Public Information Officer",
+    "employer": "Prince George County, Virginia — County Administration",
+    "url": "https://www.governmentjobs.com/jobs/5534631-0/public-information-officer",
+    "location": "Prince George, VA",
+    "salary": "$67,600.00 - $108,160.00 Annually",
+    "closes": "",
+    "first_emailed": "2026-11-19"
   }
 ]
