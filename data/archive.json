@@ -592,6 +592,66 @@
           "section": "Virginia"
         }
       ]
+    },
+    {
+      "id": "sweep-2026-11-24",
+      "title": "Job Sweep · Nov. 24, 2026",
+      "kind": "sweep",
+      "date": "2026-11-24",
+      "jobs": [
+        {
+          "title": "Communications Specialist (Data), GS-12/14",
+          "url": "https://www.usajobs.gov:443/job/893974800",
+          "employer": "Federal Communications Commission",
+          "location": "Washington, DC",
+          "salary": "$102,415 – $187,093 per year",
+          "status": "Closes 12/08/2026",
+          "fit": "Strong comms, digital, analytics; stretch for FCC data-domain specialization and OEA technical policy context.",
+          "stretch": true,
+          "note": "",
+          "deadline": "2026-12-08",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Strategic Communications Director (ADMIN PROGRAM MANAGER IV)",
+          "url": "https://www.jobapscloud.com/MD/sup/BulPreview.asp?R1=26&R2=005475&R3=0008",
+          "employer": "Comptroller of Maryland",
+          "location": "Annapolis, MD",
+          "salary": "$99,442.00 - $128,645.00/year (potential growth to $156,822.00/year)",
+          "status": "Closes 12/07/2026",
+          "fit": "Proven director leading strategic communications, media, digital, stakeholder engagement; aligns with public engagement leadership.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-07",
+          "section": "Maryland"
+        },
+        {
+          "title": "Communications and Outreach Manager (Communications Specialist III)",
+          "url": "https://www.governmentjobs.com/careers/fairfaxcounty/jobs/5552766-0/communications-and-outreach-manager-communications-specialist-iii",
+          "employer": "Fairfax County (Department of Animal Services)",
+          "location": "Fairfax, VA",
+          "salary": "$80,776.80 - $141,359.50 Annually",
+          "status": "Closes 12/11/2026",
+          "fit": "Led outreach, social, events; strong public communications background fits animal services engagement and resident education.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-11",
+          "section": "Virginia"
+        },
+        {
+          "title": "COMMUNICATIONS OFFICER/ GS 19",
+          "url": "https://www.governmentjobs.com/careers/alexandria/jobs/5553598-0/communications-officer-gs-19",
+          "employer": "City of Alexandria — Department of Transportation & Environmental Services",
+          "location": "Alexandria, VA",
+          "salary": "$64,296.44 - $113,149.40 Annually",
+          "status": "Closes 12/11/2026",
+          "fit": "Transportation/environment communications and outreach; DC-area experience, community engagement, events align with his background.",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-11",
+          "section": "Virginia"
+        }
+      ]
     }
   ]
 }
