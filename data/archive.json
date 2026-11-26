@@ -652,6 +652,40 @@
           "section": "Virginia"
         }
       ]
+    },
+    {
+      "id": "sweep-2026-11-26",
+      "title": "Job Sweep · Nov. 26, 2026",
+      "kind": "sweep",
+      "date": "2026-11-26",
+      "jobs": [
+        {
+          "title": "Marketing Specialist, GS-13",
+          "url": "https://www.usajobs.gov:443/job/894175500",
+          "employer": "U.S. Mint",
+          "location": "Washington, DC",
+          "salary": "$121,785 – $158,322 per year",
+          "status": "Closes 12/08/2026",
+          "fit": "Director-level marketing experience with e-commerce, product launches, Google Ads, email/CRM; manages major product portfolios",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-12-08",
+          "section": "Federal (MD/DC/NoVA duty stations)"
+        },
+        {
+          "title": "Management Analyst III- Community Engagement Officer",
+          "url": "https://www.governmentjobs.com/jobs/5535587-0/management-analyst-iii-community-engagement-officer",
+          "employer": "City of Alexandria — Department of Transportation & Environmental Services",
+          "location": "Alexandria, VA",
+          "salary": "$67,508.74 - $118,799.46 Annually",
+          "status": "Closes 11/27/2026",
+          "fit": "Alexandria-based marketing director; led community engagement, partnerships and public communications; transportation events experience (DC Bike Ride)",
+          "stretch": false,
+          "note": "",
+          "deadline": "2026-11-27",
+          "section": "Virginia"
+        }
+      ]
     }
   ]
 }
